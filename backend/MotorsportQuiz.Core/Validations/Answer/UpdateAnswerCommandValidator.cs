@@ -21,8 +21,7 @@ namespace MotorsportQuiz.Core.Validations.Answer
             var result = new ValidationResult();
             if (string.IsNullOrEmpty(command.Name))
                 result.AddMessage(AnswerValidationMessages.NAME);
-
-            if (await _repository.VerifyExistence(command.Name, command.Id))
+            else if (await _repository.VerifyExistence(command.Name, command.Id))
                 result.AddMessage(AnswerValidationMessages.NAME_EXISTS);
 
             return result;

@@ -1,5 +1,6 @@
 ﻿using MotorsportQuiz.Domain;
 using MotorsportQuiz.Infra.Data.Repositories.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,6 +17,15 @@ namespace MotorsportQuiz.Infra.Data.Repositories
         {
             var query = await GetAllAsync();
             return query.AsEnumerable();
+        }
+
+        public async Task<bool> VerifyExistence(string name, Guid? id)
+        {
+            var query = await GetAllAsync();
+            query = query.Where(answer => answer.Name.Equals(name));
+            if (id.HasValue)
+                query = query.Where(answer => !answer.Id.Equals(id.Value));
+            return query.Any();
         }
 
         public async Task<Question> Add(Question question) => await AddAsync(question);

@@ -5,6 +5,7 @@ using MotorsportQuiz.Core.Validations.Answer;
 using MotorsportQuiz.Core.Validations.Answer.Messages;
 using NUnit.Framework;
 using System;
+
 namespace MotorsportQuiz.Core.Test.Answer
 {
     [TestFixture]

@@ -1,5 +1,4 @@
 ﻿using FluentAssertions;
-using Microsoft.EntityFrameworkCore.Internal;
 using MotorsportQuiz.Core.Commands.Answer;
 using MotorsportQuiz.Core.Validations.Answer;
 using MotorsportQuiz.Core.Validations.Answer.Messages;
@@ -7,6 +6,7 @@ using MotorsportQuiz.Infra.Data.Repositories.Interfaces;
 using NSubstitute;
 using NUnit.Framework;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace MotorsportQuiz.Core.Test.Answer
