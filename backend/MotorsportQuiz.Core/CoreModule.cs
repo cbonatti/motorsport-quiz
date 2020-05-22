@@ -1,6 +1,10 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using MotorsportQuiz.Core.Services;
+using MotorsportQuiz.Core.Services.Interfaces;
 using MotorsportQuiz.Core.Validations.Answer;
 using MotorsportQuiz.Core.Validations.Answer.Interfaces;
+using MotorsportQuiz.Core.Validations.Question;
+using MotorsportQuiz.Core.Validations.Question.Interfaces;
 
 namespace MotorsportQuiz.Core
 {
@@ -14,6 +18,7 @@ namespace MotorsportQuiz.Core
 
         private static void RegisterServices(this IServiceCollection services)
         {
+            services.AddScoped<IQuestionService, QuestionService>();
         }
 
         private static void RegisterValidators(this IServiceCollection services)
@@ -21,6 +26,10 @@ namespace MotorsportQuiz.Core
             services.AddScoped<IAddAnswerCommandValidator, AddAnswerCommandValidator>();
             services.AddScoped<IUpdateAnswerCommandValidator, UpdateAnswerCommandValidator>();
             services.AddScoped<IRemoveAnswerCommandValidator, RemoveAnswerCommandValidator>();
+
+            services.AddScoped<IAddQuestionCommandValidator, AddQuestionCommandValidator>();
+            services.AddScoped<IUpdateQuestionCommandValidator, UpdateQuestionCommandValidator>();
+            services.AddScoped<IRemoveQuestionCommandValidator, RemoveQuestionCommandValidator>();
         }
     }
 }

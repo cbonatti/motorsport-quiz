@@ -11,26 +11,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MotorsportQuiz.Core.Test.Question
+namespace MotorsportQuiz.Core.Test.Questions
 {
     [TestFixture]
-    public class AddQuestionCommandValidatorTest
+    public class UpdateQuestionCommandValidatorTest
     {
-        private AddQuestionCommandValidator _validator;
+        private UpdateQuestionCommandValidator _validator;
         private const string _existingQuestion = "BMW";
+        private Guid existingAnswerId = Guid.NewGuid();
 
         [OneTimeSetUp]
         public void Setup()
         {
             var repo = Substitute.For<IQuestionRepository>();
-            repo.VerifyExistence(_existingQuestion, null).Returns(true);
-            _validator = new AddQuestionCommandValidator(repo);
+            repo.VerifyExistence(_existingQuestion, existingAnswerId).Returns(true);
+            _validator = new UpdateQuestionCommandValidator(repo);
         }
 
         [Test]
         public async Task Should_Not_Validate_Empty_Command()
         {
-            var result = await _validator.Validate(new AddQuestionCommand());
+            var result = await _validator.Validate(new UpdateQuestionCommand());
             result.Success.Should().BeFalse();
             result.Messages.Contains(QuestionValidationMessages.NAME);
             result.Messages.Contains(QuestionValidationMessages.NO_ANSWERS);
@@ -40,7 +41,7 @@ namespace MotorsportQuiz.Core.Test.Question
         [Test]
         public async Task Should_Not_Validate_Command_Existing_Name()
         {
-            var result = await _validator.Validate(new AddQuestionCommand() { Name = _existingQuestion });
+            var result = await _validator.Validate(new UpdateQuestionCommand() { Name = _existingQuestion, Id = existingAnswerId });
             result.Success.Should().BeFalse();
             result.Messages.Contains(QuestionValidationMessages.NAME_EXISTS);
         }
@@ -48,7 +49,7 @@ namespace MotorsportQuiz.Core.Test.Question
         [Test]
         public async Task Should_Not_Validate_Command_No_Answers()
         {
-            var result = await _validator.Validate(new AddQuestionCommand() { Name = "Mini" });
+            var result = await _validator.Validate(new UpdateQuestionCommand() { Name = "Mini" });
             result.Success.Should().BeFalse();
             result.Messages.Contains(QuestionValidationMessages.NO_ANSWERS);
         }
@@ -56,7 +57,7 @@ namespace MotorsportQuiz.Core.Test.Question
         [Test]
         public async Task Should_Not_Validate_Command_No_Correct_Answer()
         {
-            var result = await _validator.Validate(new AddQuestionCommand()
+            var result = await _validator.Validate(new UpdateQuestionCommand()
             {
                 Name = "Mini",
                 Answers = new List<QuestionAnswerDto>()
@@ -71,7 +72,7 @@ namespace MotorsportQuiz.Core.Test.Question
         [Test]
         public async Task Should_Validate_Command()
         {
-            var result = await _validator.Validate(new AddQuestionCommand()
+            var result = await _validator.Validate(new UpdateQuestionCommand()
             {
                 Name = "Mini",
                 Answers = new List<QuestionAnswerDto>()

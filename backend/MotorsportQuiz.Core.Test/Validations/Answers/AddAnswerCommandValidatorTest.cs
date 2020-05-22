@@ -5,31 +5,29 @@ using MotorsportQuiz.Core.Validations.Answer.Messages;
 using MotorsportQuiz.Infra.Data.Repositories.Interfaces;
 using NSubstitute;
 using NUnit.Framework;
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MotorsportQuiz.Core.Test.Answer
+namespace MotorsportQuiz.Core.Test.Answers
 {
     [TestFixture]
-    public class UpdateAnswerCommandValidatorTest
+    public class AddAnswerCommandValidatorTest
     {
-        private UpdateAnswerCommandValidator _validator;
-        private const string _existingAnswerName = "Alemanha";
-        private Guid existingAnswerId = Guid.NewGuid();
+        private AddAnswerCommandValidator _validator;
+        private const string _existingAnswer = "Alemanha";
 
         [OneTimeSetUp]
         public void Setup()
         {
             var repo = Substitute.For<IAnswerRepository>();
-            repo.VerifyExistence(_existingAnswerName, existingAnswerId).Returns(true);
-            _validator = new UpdateAnswerCommandValidator(repo);
+            repo.VerifyExistence(_existingAnswer, null).Returns(true);
+            _validator = new AddAnswerCommandValidator(repo);
         }
 
         [Test]
         public async Task Should_Not_Validate_Empty_Command()
         {
-            var result = await _validator.Validate(new UpdateAnswerCommand());
+            var result = await _validator.Validate(new AddAnswerCommand());
             result.Success.Should().BeFalse();
             result.Messages.Contains(AnswerValidationMessages.NAME);
         }
@@ -37,7 +35,7 @@ namespace MotorsportQuiz.Core.Test.Answer
         [Test]
         public async Task Should_Not_Validate_Command_Existing_Name()
         {
-            var result = await _validator.Validate(new UpdateAnswerCommand() { Name = _existingAnswerName, Id = existingAnswerId });
+            var result = await _validator.Validate(new AddAnswerCommand() { Name = _existingAnswer });
             result.Success.Should().BeFalse();
             result.Messages.Contains(AnswerValidationMessages.NAME_EXISTS);
         }
@@ -45,7 +43,7 @@ namespace MotorsportQuiz.Core.Test.Answer
         [Test]
         public async Task Should_Validate_Command()
         {
-            var result = await _validator.Validate(new UpdateAnswerCommand() { Name = "Inglaterra" });
+            var result = await _validator.Validate(new AddAnswerCommand() { Name = "Inglaterra" });
             result.Success.Should().BeTrue();
             result.Messages.Any().Should().BeFalse();
         }

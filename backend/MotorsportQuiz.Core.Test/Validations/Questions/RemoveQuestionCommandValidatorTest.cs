@@ -6,7 +6,7 @@ using MotorsportQuiz.Core.Validations.Question.Messages;
 using NUnit.Framework;
 using System;
 
-namespace MotorsportQuiz.Core.Test.Question
+namespace MotorsportQuiz.Core.Test.Questions
 {
     [TestFixture]
     public class RemoveQuestionCommandValidatorTest

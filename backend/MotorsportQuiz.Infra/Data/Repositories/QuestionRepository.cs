@@ -13,6 +13,8 @@ namespace MotorsportQuiz.Infra.Data.Repositories
         {
         }
 
+        public async Task<Question> Get(Guid id) => await GetByIdAsync(id);
+
         public async Task<IEnumerable<Question>> GetAll()
         {
             var query = await GetAllAsync();
@@ -40,6 +42,11 @@ namespace MotorsportQuiz.Infra.Data.Repositories
         {
             await RemoveAsync(question);
             return question;
+        }
+
+        public async Task Remove(Guid id)
+        {
+            await RemoveAsync(id);
         }
     }
 }
