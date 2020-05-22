@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MotorsportQuiz.Core;
 using MotorsportQuiz.Infra;
 using MotorsportQuiz.Infra.Data;
 
@@ -25,6 +26,7 @@ namespace MotorsportQuiz
             services.AddMvc();
             services.AddDbContext();
             services.RegisterInfra();
+            services.RegisterCore();
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
