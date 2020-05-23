@@ -21,6 +21,12 @@ namespace MotorsportQuiz.Domain
             SetId(id);
         }
 
+        public Question(Guid id, string name)
+        {
+            SetId(id);
+            SetName(name);
+        }
+
         public virtual IList<QuestionAnswer> Answers { get; private set; }
     }
 }
