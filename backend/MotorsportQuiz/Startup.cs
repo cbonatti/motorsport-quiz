@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 using MotorsportQuiz.Core;
 using MotorsportQuiz.Infra;
 using MotorsportQuiz.Infra.Data;
@@ -32,6 +32,22 @@ namespace MotorsportQuiz
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/dist";
+            });
+
+            services.AddSwaggerGen(c => {
+
+                c.SwaggerDoc("v1",
+                    new OpenApiInfo
+                    {
+                        Title = "Motorsport Quiz API",
+                        Version = "v1",
+                        Description = "Manage quiz questions, answers and compute results",
+                        Contact = new OpenApiContact
+                        {
+                            Name = "Carlos Bonatti",
+                            Email = "carlos.bonatti@live.com"
+                        }
+                    });
             });
         }
 
@@ -79,6 +95,11 @@ namespace MotorsportQuiz
             });
 
             app.ConfigureContext();
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c => {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Motorsport Quiz V1");
+            });
         }
     }
 }
