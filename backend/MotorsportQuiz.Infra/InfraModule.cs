@@ -20,6 +20,7 @@ namespace MotorsportQuiz.Infra
             // Repositories
             services.AddScoped<IQuestionRepository, QuestionRepository>();
             services.AddScoped<IAnswerRepository, AnswerRepository>();
+            services.AddScoped<IQuizRepository, QuizRepository>();
         }
 
         public static void ConfigureContext(this IApplicationBuilder app)
