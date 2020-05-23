@@ -23,6 +23,7 @@ namespace MotorsportQuiz.Core
             services.AddScoped<IQuestionService, QuestionService>();
             services.AddScoped<IQuizResultService, QuizResultService>();
             services.AddScoped<IAnswerService, AnswerService>();
+            services.AddScoped<IQuizService, QuizService>();
         }
 
         private static void RegisterValidators(this IServiceCollection services)
@@ -36,6 +37,7 @@ namespace MotorsportQuiz.Core
             services.AddScoped<IRemoveQuestionCommandValidator, RemoveQuestionCommandValidator>();
 
             services.AddScoped<IFinishQuizCommandValidator, FinishQuizCommandValidator>();
+            services.AddScoped<IStartQuizCommandValidator, StartQuizCommandValidator>();
         }
     }
 }
