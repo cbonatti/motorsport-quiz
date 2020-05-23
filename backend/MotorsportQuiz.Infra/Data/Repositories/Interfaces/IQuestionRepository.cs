@@ -9,6 +9,7 @@ namespace MotorsportQuiz.Infra.Data.Repositories.Interfaces
     {
         Task<Question> Get(Guid id);
         Task<IEnumerable<Question>> GetAll();
+        Task<IEnumerable<Question>> GetAll(IEnumerable<Guid> questions);
         Task<bool> VerifyExistence(string name, Guid? id);
         Task<Question> Add(Question question);
         Task<Question> Update(Question question);

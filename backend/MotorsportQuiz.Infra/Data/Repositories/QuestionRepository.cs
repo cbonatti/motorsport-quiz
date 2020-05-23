@@ -21,12 +21,19 @@ namespace MotorsportQuiz.Infra.Data.Repositories
             return query.AsEnumerable();
         }
 
+        public async Task<IEnumerable<Question>> GetAll(IEnumerable<Guid> questions)
+        {
+            var query = await GetAllAsync();
+            query = query.Where(question => questions.Contains(question.Id));
+            return query.AsEnumerable();
+        }
+
         public async Task<bool> VerifyExistence(string name, Guid? id)
         {
             var query = await GetAllAsync();
-            query = query.Where(answer => answer.Name.Equals(name));
+            query = query.Where(question => question.Name.Equals(name));
             if (id.HasValue)
-                query = query.Where(answer => !answer.Id.Equals(id.Value));
+                query = query.Where(question => !question.Id.Equals(id.Value));
             return query.Any();
         }
 

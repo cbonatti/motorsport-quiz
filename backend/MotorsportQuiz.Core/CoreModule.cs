@@ -5,6 +5,8 @@ using MotorsportQuiz.Core.Validations.Answer;
 using MotorsportQuiz.Core.Validations.Answer.Interfaces;
 using MotorsportQuiz.Core.Validations.Question;
 using MotorsportQuiz.Core.Validations.Question.Interfaces;
+using MotorsportQuiz.Core.Validations.Quiz;
+using MotorsportQuiz.Core.Validations.Quiz.Interfaces;
 
 namespace MotorsportQuiz.Core
 {
@@ -19,6 +21,8 @@ namespace MotorsportQuiz.Core
         private static void RegisterServices(this IServiceCollection services)
         {
             services.AddScoped<IQuestionService, QuestionService>();
+            services.AddScoped<IQuizResultService, QuizResultService>();
+            services.AddScoped<IAnswerService, AnswerService>();
         }
 
         private static void RegisterValidators(this IServiceCollection services)
@@ -30,6 +34,8 @@ namespace MotorsportQuiz.Core
             services.AddScoped<IAddQuestionCommandValidator, AddQuestionCommandValidator>();
             services.AddScoped<IUpdateQuestionCommandValidator, UpdateQuestionCommandValidator>();
             services.AddScoped<IRemoveQuestionCommandValidator, RemoveQuestionCommandValidator>();
+
+            services.AddScoped<IFinishQuizCommandValidator, FinishQuizCommandValidator>();
         }
     }
 }
