@@ -3,11 +3,9 @@ using MotorsportQuiz.Core.Commands.Question;
 using MotorsportQuiz.Core.Commands.Question.Contracts;
 using MotorsportQuiz.Core.Services;
 using MotorsportQuiz.Core.Validations.Question;
-using MotorsportQuiz.Core.Validations.Question.Interfaces;
 using MotorsportQuiz.Core.Validations.Question.Messages;
 using MotorsportQuiz.Domain;
 using MotorsportQuiz.Infra.Data.Repositories.Interfaces;
-using MotorsportQuiz.Infra.Results;
 using NSubstitute;
 using NUnit.Framework;
 using System;
@@ -38,9 +36,6 @@ namespace MotorsportQuiz.Core.Test.Services
             var addValidator = new AddQuestionCommandValidator(repo);
             var updateValidator = new UpdateQuestionCommandValidator(repo);
             var removeValidator = new RemoveQuestionCommandValidator();
-
-            var validationResult = new ValidationResult();
-            //addValidator.Validate(Arg.Any<AddQuestionCommand>()).ReturnsForAnyArgs(validationResult);
 
             _service = new QuestionService(repo, addValidator, updateValidator, removeValidator);
         }
