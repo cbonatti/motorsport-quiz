@@ -1,0 +1,25 @@
+<h1>Perguntas</h1>
+<button [routerLink]="['/question']" class="btn btn-primary">
+    <i class="fa fa-plus" aria-hidden="true"></i>
+    Nova resposta
+</button>
+<div *ngIf="!questions || questions.length == 0" class="alert alert-info" role="alert">
+    Nenhuma pergunta cadastrada
+</div>
+<table *ngIf="questions && questions.length > 0" class="table table-hover">
+    <tbody>
+        <tr *ngFor="let question of questions">
+            <td>{{question.name}}</td>
+            <td>
+                <button [routerLink]="['/question', question.id]" class="btn btn-warning btn-sm">
+                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                    Editar
+                </button>
+                <button (click)="remove(question.id)" class="btn btn-danger btn-sm">
+                    <i class="fa fa-trash" aria-hidden="true"></i>
+                    Excluir
+                </button>
+            </td>
+        </tr>
+    </tbody>
+</table>

@@ -1,0 +1,7 @@
+<h1>Resposta</h1>
+<div class="form-group">
+    <label for="answerName">Descrição</label>
+    <input type="text" class="form-control" id="answerName" placeholder="Descrição" [(ngModel)]="answer.name">
+</div>
+<button type="button" class="btn btn-primary" (click)="save()">Salvar</button>
+<button type="button" class="btn btn-link" [routerLink]="['/answers']">Voltar</button>

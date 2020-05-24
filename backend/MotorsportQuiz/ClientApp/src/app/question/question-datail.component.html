@@ -1,0 +1,57 @@
+<h1>Perguntas</h1>
+<div class="form-group">
+    <label for="questionName">Descrição</label>
+    <input type="text" class="form-control" id="questionName" placeholder="Descrição" [(ngModel)]="question.name">
+</div>
+<fieldset>
+    <legend>Respostas</legend>
+    <table class="table table-hover answer" *ngIf="answers && answers.length > 0">
+        <thead>
+            <tr>
+                <th scope="col">Resposta</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let answer of answers">
+                <td>{{answer.name}}</td>
+                <td>
+                    <button (click)="add(answer)" class="btn btn-info btn-sm">
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                        Incluir
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table class="table table-hover questionAnswer">
+        <thead>
+            <tr>
+                <th scope="col">Correta</th>
+                <th scope="col">Resposta</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let answer of question.answers">
+                <td>
+                    <input type="radio" name="radioCorrectAnswer" [(ngModel)]="checkedId" [value]="answer.id">
+                </td>
+                <td>{{answer.name}}</td>
+                <td>
+                    <button (click)="remove(answer)" class="btn btn-danger btn-sm">
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                        Excluir
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div *ngIf="!question.answers || question.answers.length == 0" class="alert alert-info" role="alert">
+        Nenhuma resposta foi incluída
+    </div>
+</fieldset>
+
+<button type="button" class="btn btn-primary" [disabled]="!checkedId" (click)="save()">Salvar</button>
+<button type="button" class="btn btn-link" [routerLink]="['/questions']">Voltar</button>

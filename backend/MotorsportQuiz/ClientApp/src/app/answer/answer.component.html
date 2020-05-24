@@ -1,0 +1,25 @@
+<h1>Respostas</h1>
+<button [routerLink]="['/answer']" class="btn btn-primary">
+    <i class="fa fa-plus" aria-hidden="true"></i>
+    Nova resposta
+</button>
+<div *ngIf="!answers || answers.length == 0" class="alert alert-info" role="alert">
+    Nenhuma resposta cadastrada
+</div>
+<table *ngIf="answers && answers.length > 0" class="table table-hover">
+    <tbody>
+        <tr *ngFor="let answer of answers">
+            <td>{{answer.name}}</td>
+            <td>
+                <button [routerLink]="['/answer', answer.id]" class="btn btn-warning btn-sm">
+                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                    Editar
+                </button>
+                <button (click)="remove(answer.id)" class="btn btn-danger btn-sm">
+                    <i class="fa fa-trash" aria-hidden="true"></i>
+                    Excluir
+                </button>
+            </td>
+        </tr>
+    </tbody>
+</table>
