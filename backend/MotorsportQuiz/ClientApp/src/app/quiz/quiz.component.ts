@@ -24,6 +24,7 @@ export class QuizComponent implements OnInit {
     question: QuestionModel;
     canFinish: boolean;
     result: number;
+    resultMessage: string;
     finished: boolean;
 
     constructor(private service: QuizService) {
@@ -70,7 +71,17 @@ export class QuizComponent implements OnInit {
             }
             debugger;
             this.result = result.value.result;
+            this.verifyResult();
             this.finished = true;
         }, error => alert(error));
+    }
+
+    verifyResult() {
+        if (this.result >= 80)
+            this.resultMessage = "Parabéns!!!";
+        else if (this.result >= 50)
+            this.resultMessage = "Você está no caminho certo!";
+        else if (this.result <= 20)
+            this.resultMessage = "Em que caverna você vive?!?!?!";
     }
 }

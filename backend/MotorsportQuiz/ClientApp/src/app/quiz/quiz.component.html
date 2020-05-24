@@ -24,4 +24,6 @@
 <div *ngIf="finished">
     <h5>Seu score foi:</h5>
     <h1>{{result}}</h1>
+    <h5>{{resultMessage}}</h5> 
+    <button type="button" class="btn btn-primary" (click)="start()">Iniciar novo Quiz</button>
 </div>
