@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { QuizService } from './services/quiz.service';
-import { QuizModel } from './models/quiz.model';
+import { QuizService } from '../quiz/services/quiz.service';
+import { QuizResultModel } from '../quiz/models/quiz-result.model';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
 })
 export class HomeComponent implements OnInit {
-  quizzes: QuizModel[];
+  quizzes: QuizResultModel[];
 
   constructor(private service: QuizService) {
 

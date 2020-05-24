@@ -1,0 +1,27 @@
+<h1>Quiz</h1>
+<div *ngIf="!quiz && !finished">
+    <div class="form-group">
+        <label for="userName">Digite seu nome</label>
+        <input type="text" class="form-control" id="userName" placeholder="Digite seu nome" [(ngModel)]="userName">
+    </div>
+    <button type="button" class="btn btn-primary" (click)="start()">Iniciar</button>
+</div>
+<div *ngIf="quiz && !finished">
+    <h5>Questão {{actualQuestionIndex + 1}}: {{question.name}}</h5>
+    <table class="table table-hover">
+        <tbody>
+          <tr *ngFor="let answer of question.answers">
+                <td>
+                    <input type="radio" name="radioAnswer" [(ngModel)]="checkedId" [value]="answer.id">
+                </td>
+                <td>{{answer.name}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <button type="button" class="btn btn-primary" [disabled]="!checkedId" (click)="next()" *ngIf="!canFinish">Próxima</button>
+      <button type="button" class="btn btn-primary" [disabled]="!checkedId" (click)="finish()" *ngIf="canFinish">Finalizar</button>
+</div>
+<div *ngIf="finished">
+    <h5>Seu score foi:</h5>
+    <h1>{{result}}</h1>
+</div>
