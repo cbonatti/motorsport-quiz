@@ -33,6 +33,7 @@ namespace MotorsportQuiz.Core.Services
                             .ThenBy(quiz => quiz.Name)
                             .Select(QuizResultResponse.ToResponse)
                             .AsEnumerable();
+
             return new Result<IEnumerable<QuizResultResponse>>(quizzes);
         }
 

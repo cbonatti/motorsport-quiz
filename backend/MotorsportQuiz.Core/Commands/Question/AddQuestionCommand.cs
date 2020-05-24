@@ -14,6 +14,6 @@ namespace MotorsportQuiz.Core.Commands.Question
         public string Name { get; set; }
         public IList<QuestionAnswerDto> Answers { get; set; }
 
-        public Domain.Question ToQuestion() => new Domain.Question(Name, Answers.Select(answer => new Domain.QuestionAnswer(answer.Id, answer.Name, answer.Correct)).ToList());
+        public Domain.Question ToQuestion() => new Domain.Question(Name, Answers.Select(answer => new Domain.QuestionAnswer(answer.Id, answer.Correct)).ToList());
     }
 }

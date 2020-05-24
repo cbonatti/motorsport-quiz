@@ -1,5 +1,6 @@
 ﻿using MotorsportQuiz.Domain.Base;
 using System;
+using System.Collections.Generic;
 
 namespace MotorsportQuiz.Domain
 {
@@ -18,5 +19,7 @@ namespace MotorsportQuiz.Domain
         {
             SetId(id);
         }
+
+        public virtual ICollection<QuestionAnswer> Questions { get; private set; }
     }
 }

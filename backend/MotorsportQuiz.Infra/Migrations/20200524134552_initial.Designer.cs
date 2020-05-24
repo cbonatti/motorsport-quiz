@@ -9,7 +9,7 @@ using MotorsportQuiz.Infra.Data;
 namespace MotorsportQuiz.Infra.Migrations
 {
     [DbContext(typeof(MotorsportQuizDbContext))]
-    [Migration("20200523051509_initial")]
+    [Migration("20200524134552_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -121,140 +121,140 @@ namespace MotorsportQuiz.Infra.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("9442a0a7-5aed-46c4-949b-b187113f3655"),
+                            Id = new Guid("8efb81c1-ef1e-48d1-89ba-97bdcb6e26e7"),
                             AnswerId = new Guid("e987dd39-b377-4df0-9b4f-d70538121d70"),
                             Correct = false,
                             QuestionId = new Guid("46800301-9e10-44ce-80ee-c5097e69080a")
                         },
                         new
                         {
-                            Id = new Guid("a541be38-14a2-4d0c-a7bf-0525b290f638"),
+                            Id = new Guid("1dbdaf37-e5dc-42d7-be60-35f07e82e62b"),
                             AnswerId = new Guid("fe5e1bbc-edd7-4153-81a2-add6908b0b1f"),
                             Correct = false,
                             QuestionId = new Guid("46800301-9e10-44ce-80ee-c5097e69080a")
                         },
                         new
                         {
-                            Id = new Guid("950f98e1-02cf-4d0f-b493-5a59324c38a1"),
+                            Id = new Guid("a386f5d1-741c-40c7-8f2f-b3ace486516d"),
                             AnswerId = new Guid("4ef0f07c-2450-454f-8364-f6703621fb3b"),
                             Correct = true,
                             QuestionId = new Guid("46800301-9e10-44ce-80ee-c5097e69080a")
                         },
                         new
                         {
-                            Id = new Guid("0b07d90f-bf4e-4dab-9f1d-384ad2ebb07a"),
+                            Id = new Guid("58ac5e95-2153-4e8a-b5b3-2d347c9a2b21"),
                             AnswerId = new Guid("74d4504d-f55b-49a6-b35e-19b90abb8904"),
                             Correct = false,
                             QuestionId = new Guid("46800301-9e10-44ce-80ee-c5097e69080a")
                         },
                         new
                         {
-                            Id = new Guid("dd9dc0ba-87a7-412f-96ac-a03cdd8be170"),
+                            Id = new Guid("7f1fe989-a7e6-4b78-9c97-8541962ded6a"),
                             AnswerId = new Guid("e987dd39-b377-4df0-9b4f-d70538121d70"),
                             Correct = false,
                             QuestionId = new Guid("3eb99380-568e-449d-842c-d997a56875c0")
                         },
                         new
                         {
-                            Id = new Guid("85ed90d3-19cf-4d2b-bd76-8dcffda82c1d"),
+                            Id = new Guid("f74f1c10-e9ac-4011-8460-2ec93e495da9"),
                             AnswerId = new Guid("fe5e1bbc-edd7-4153-81a2-add6908b0b1f"),
                             Correct = false,
                             QuestionId = new Guid("3eb99380-568e-449d-842c-d997a56875c0")
                         },
                         new
                         {
-                            Id = new Guid("c3afe181-b3cf-4c7c-bc06-6232066c488d"),
+                            Id = new Guid("f7cfb9f5-24cf-47e1-89ef-10b2406f7a95"),
                             AnswerId = new Guid("4ef0f07c-2450-454f-8364-f6703621fb3b"),
                             Correct = false,
                             QuestionId = new Guid("3eb99380-568e-449d-842c-d997a56875c0")
                         },
                         new
                         {
-                            Id = new Guid("4aeed317-c192-486c-89e2-d98a7d6c8ea2"),
+                            Id = new Guid("3376fd44-83f1-4659-a42b-85e016009bb8"),
                             AnswerId = new Guid("74d4504d-f55b-49a6-b35e-19b90abb8904"),
                             Correct = true,
                             QuestionId = new Guid("3eb99380-568e-449d-842c-d997a56875c0")
                         },
                         new
                         {
-                            Id = new Guid("d9220995-1c20-4767-aa18-5ecdd2516a15"),
+                            Id = new Guid("9fca647a-390c-4b9a-80e5-b1bbc4efb91f"),
                             AnswerId = new Guid("e987dd39-b377-4df0-9b4f-d70538121d70"),
                             Correct = true,
                             QuestionId = new Guid("473d113f-0279-422a-afb3-6533908df4b9")
                         },
                         new
                         {
-                            Id = new Guid("dede8d12-5edd-449f-bad8-03fa2fff2dc5"),
+                            Id = new Guid("aabc2ed9-2af8-4647-8c53-81583d3c76c8"),
                             AnswerId = new Guid("fe5e1bbc-edd7-4153-81a2-add6908b0b1f"),
                             Correct = false,
                             QuestionId = new Guid("473d113f-0279-422a-afb3-6533908df4b9")
                         },
                         new
                         {
-                            Id = new Guid("22d7c535-c2bc-459a-9489-7374f4da2bd0"),
+                            Id = new Guid("f1e0dc25-2c37-4a86-8cf0-6ee5eea3a2f2"),
                             AnswerId = new Guid("4ef0f07c-2450-454f-8364-f6703621fb3b"),
                             Correct = false,
                             QuestionId = new Guid("473d113f-0279-422a-afb3-6533908df4b9")
                         },
                         new
                         {
-                            Id = new Guid("edc6191c-5e29-48cf-a639-3fbc8d8e0346"),
+                            Id = new Guid("3208939f-49a4-4784-8890-697eb59343d1"),
                             AnswerId = new Guid("74d4504d-f55b-49a6-b35e-19b90abb8904"),
                             Correct = false,
                             QuestionId = new Guid("473d113f-0279-422a-afb3-6533908df4b9")
                         },
                         new
                         {
-                            Id = new Guid("bc76d353-e141-490f-9895-5fbcb8696e1c"),
+                            Id = new Guid("d84ae0b2-f7d0-4ef1-9fe1-62910bcd319f"),
                             AnswerId = new Guid("e987dd39-b377-4df0-9b4f-d70538121d70"),
                             Correct = false,
                             QuestionId = new Guid("a6c4affe-770d-4258-8906-eb5707756c94")
                         },
                         new
                         {
-                            Id = new Guid("5083dd2b-fabf-448c-982c-8a7e6fec347d"),
+                            Id = new Guid("8b8ba378-ace3-4d79-acf8-594545ba3adc"),
                             AnswerId = new Guid("fe5e1bbc-edd7-4153-81a2-add6908b0b1f"),
                             Correct = true,
                             QuestionId = new Guid("a6c4affe-770d-4258-8906-eb5707756c94")
                         },
                         new
                         {
-                            Id = new Guid("dd18653a-b22c-44f5-8f5d-95ed6b4c2aad"),
+                            Id = new Guid("66b7e245-de57-4e81-901e-8fd930995876"),
                             AnswerId = new Guid("4ef0f07c-2450-454f-8364-f6703621fb3b"),
                             Correct = false,
                             QuestionId = new Guid("a6c4affe-770d-4258-8906-eb5707756c94")
                         },
                         new
                         {
-                            Id = new Guid("c0efa554-fee2-4e8e-bcdd-9a60e3749557"),
+                            Id = new Guid("780681e5-83b7-4fd3-8f18-1650eaf8f2dd"),
                             AnswerId = new Guid("74d4504d-f55b-49a6-b35e-19b90abb8904"),
                             Correct = false,
                             QuestionId = new Guid("a6c4affe-770d-4258-8906-eb5707756c94")
                         },
                         new
                         {
-                            Id = new Guid("2d879fe5-bd54-4aad-9941-2c6cb5f61776"),
+                            Id = new Guid("7a87c0aa-057d-451b-865e-67f87401b46d"),
                             AnswerId = new Guid("e987dd39-b377-4df0-9b4f-d70538121d70"),
                             Correct = true,
                             QuestionId = new Guid("296b4c6f-9dff-492b-90f2-4bcb7d7344cb")
                         },
                         new
                         {
-                            Id = new Guid("79cf6e43-0bc6-460d-87a9-38091ad32c14"),
+                            Id = new Guid("75080270-7c4b-4eae-bcef-5c32122acaa6"),
                             AnswerId = new Guid("fe5e1bbc-edd7-4153-81a2-add6908b0b1f"),
                             Correct = false,
                             QuestionId = new Guid("296b4c6f-9dff-492b-90f2-4bcb7d7344cb")
                         },
                         new
                         {
-                            Id = new Guid("ebafa428-9c75-4f7e-9b66-833845580080"),
+                            Id = new Guid("29bb073d-d5a8-4cf8-9040-a76bb7c82b69"),
                             AnswerId = new Guid("4ef0f07c-2450-454f-8364-f6703621fb3b"),
                             Correct = false,
                             QuestionId = new Guid("296b4c6f-9dff-492b-90f2-4bcb7d7344cb")
                         },
                         new
                         {
-                            Id = new Guid("73c81d70-1a13-4511-878b-0428c0de83da"),
+                            Id = new Guid("53fee0eb-c09d-423f-9b06-0bb1ee3229d8"),
                             AnswerId = new Guid("74d4504d-f55b-49a6-b35e-19b90abb8904"),
                             Correct = false,
                             QuestionId = new Guid("296b4c6f-9dff-492b-90f2-4bcb7d7344cb")
@@ -284,9 +284,9 @@ namespace MotorsportQuiz.Infra.Migrations
             modelBuilder.Entity("MotorsportQuiz.Domain.QuestionAnswer", b =>
                 {
                     b.HasOne("MotorsportQuiz.Domain.Answer", "Answer")
-                        .WithMany()
+                        .WithMany("Questions")
                         .HasForeignKey("AnswerId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("MotorsportQuiz.Domain.Question", "Question")

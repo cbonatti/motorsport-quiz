@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Configuration;
 using MotorsportQuiz.Domain;
 using System;
-using System.Collections.Generic;
 
 namespace MotorsportQuiz.Infra.Data
 {
@@ -25,6 +24,17 @@ namespace MotorsportQuiz.Infra.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<QuestionAnswer>()
+                .HasOne(bc => bc.Question)
+                .WithMany(b => b.Answers)
+                .HasForeignKey(bc => bc.QuestionId);
+            modelBuilder.Entity<QuestionAnswer>()
+                .HasOne(bc => bc.Answer)
+                .WithMany(c => c.Questions)
+                .HasForeignKey(bc => bc.AnswerId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            #region Seed
             var inglaterraID = Guid.Parse("e987dd39-b377-4df0-9b4f-d70538121d70");
             var usaID = Guid.Parse("fe5e1bbc-edd7-4153-81a2-add6908b0b1f");
             var alemanhaID = Guid.Parse("4ef0f07c-2450-454f-8364-f6703621fb3b");
@@ -70,7 +80,8 @@ namespace MotorsportQuiz.Infra.Data
             modelBuilder.Entity<QuestionAnswer>().HasData(new QuestionAnswer(rollsRoyceID, inglaterraID, true));
             modelBuilder.Entity<QuestionAnswer>().HasData(new QuestionAnswer(rollsRoyceID, usaID, false));
             modelBuilder.Entity<QuestionAnswer>().HasData(new QuestionAnswer(rollsRoyceID, alemanhaID, false));
-            modelBuilder.Entity<QuestionAnswer>().HasData(new QuestionAnswer(rollsRoyceID, japaoID, false));
+            modelBuilder.Entity<QuestionAnswer>().HasData(new QuestionAnswer(rollsRoyceID, japaoID, false)); 
+            #endregion
         }
 
         public DbSet<Question> Questions { get; set; }

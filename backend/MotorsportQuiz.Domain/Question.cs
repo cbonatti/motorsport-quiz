@@ -27,6 +27,18 @@ namespace MotorsportQuiz.Domain
             SetName(name);
         }
 
-        public virtual IList<QuestionAnswer> Answers { get; private set; }
+        public virtual ICollection<QuestionAnswer> Answers { get; private set; }
+
+        public Question AddAnswer(QuestionAnswer answer)
+        {
+            Answers.Add(answer);
+            return this;
+        }
+
+        public Question RemoveAnswer(QuestionAnswer answer)
+        {
+            Answers.Remove(answer);
+            return this;
+        }
     }
 }

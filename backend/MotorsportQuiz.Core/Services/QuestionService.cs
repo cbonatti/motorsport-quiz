@@ -2,6 +2,7 @@
 using MotorsportQuiz.Core.Responses;
 using MotorsportQuiz.Core.Services.Interfaces;
 using MotorsportQuiz.Core.Validations.Question.Interfaces;
+using MotorsportQuiz.Domain;
 using MotorsportQuiz.Infra.Data.Repositories.Interfaces;
 using MotorsportQuiz.Infra.Results;
 using MotorsportQuiz.Infra.Services;
@@ -38,7 +39,7 @@ namespace MotorsportQuiz.Core.Services
         {
             var query = await _repository.GetAll();
             var questions = query
-                            .OrderBy(x => x.Name)
+                            .OrderBy(question => question.Name)
                             .Select(QuestionResponse.ToResponse)
                             .AsEnumerable();
             return new Result<IEnumerable<QuestionResponse>>(questions);
@@ -51,10 +52,8 @@ namespace MotorsportQuiz.Core.Services
                 return validationResult;
 
             var question = command.ToQuestion();
-
             await _repository.Add(question);
-
-            return new Result<QuestionResponse>(QuestionResponse.ToResponse(question));
+            return new Result<QuestionResponse>(new QuestionResponse());
         }
 
         public async Task<Result<QuestionResponse>> Update(UpdateQuestionCommand command)
@@ -67,9 +66,29 @@ namespace MotorsportQuiz.Core.Services
             question
                 .SetName(command.Name);
 
+            var toAdd = command.Answers
+                                .Where(commandAnswer => !question.Answers.Any(answer => answer.AnswerId == commandAnswer.Id))
+                                .Select(answer => new QuestionAnswer(answer.Id, answer.Correct))
+                                .ToList();
+            var toRemove = question.Answers
+                                .Where(answer => !command.Answers.Any(commandAnswer => commandAnswer.Id == answer.AnswerId))
+                                .ToList();
+            var toUpdate = question.Answers
+                                .Where(answer => command.Answers.Any(commandAnswer => commandAnswer.Id == answer.AnswerId && commandAnswer.Correct != answer.Correct))
+                                .ToList();
+
+            foreach (var item in toRemove)
+                question.RemoveAnswer(item);
+
+            foreach (var item in toAdd)
+                question.AddAnswer(item);
+
+            foreach (var item in toUpdate)
+                item.SetCorrect(!item.Correct);
+
             await _repository.Update(question);
 
-            return new Result<QuestionResponse>(QuestionResponse.ToResponse(question));
+            return new Result<QuestionResponse>(new QuestionResponse());
         }
 
         public async Task<Result<QuestionResponse>> Delete(RemoveQuestionCommand command)

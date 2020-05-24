@@ -15,6 +15,12 @@ namespace MotorsportQuiz.Domain
             Correct = correct;
         }
 
+        public QuestionAnswer(Guid id, bool correct)
+        {
+            AnswerId = id;
+            Correct = correct;
+        }
+
         public QuestionAnswer(Guid questionId, Guid answerID, bool correct) : this()
         {
             QuestionId = questionId;
@@ -28,5 +34,11 @@ namespace MotorsportQuiz.Domain
         public Guid QuestionId { get; private set; }
         public virtual Question Question { get; private set; }
         public bool Correct { get; private set; }
+
+        public QuestionAnswer SetCorrect(bool correct)
+        {
+            Correct = correct;
+            return this;
+        }
     }
 }

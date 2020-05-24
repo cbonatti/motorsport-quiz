@@ -1,4 +1,6 @@
-﻿using MotorsportQuiz.Core.Commands.Answer;
+﻿using Microsoft.Data.Sqlite;
+using Microsoft.EntityFrameworkCore;
+using MotorsportQuiz.Core.Commands.Answer;
 using MotorsportQuiz.Core.Responses;
 using MotorsportQuiz.Core.Services.Interfaces;
 using MotorsportQuiz.Core.Validations.Answer.Interfaces;
@@ -77,9 +79,28 @@ namespace MotorsportQuiz.Core.Services
             var validationResult = Validate(_removeAnswerCommandValidator.Validate(command));
             if (!validationResult.Success)
                 return validationResult;
-            await _repository.Remove(command.Id);
+            try
+            {
+                await _repository.Remove(command.Id);
+            }
+            catch (DbUpdateException ex)
+            {
+                return HandleDatabaseException(ex);
+            }
+            catch (Exception ex)
+            {
+                return new Result<AnswerResponse>("Erro ao excluir resposta: " + Environment.NewLine + ex.Message);
+            }
 
             return new Result<AnswerResponse>();
+        }
+
+        private Result<AnswerResponse> HandleDatabaseException(Exception ex)
+        {
+            if (ex.Message.Contains("FOREIGN KEY constraint") || (ex.InnerException != null && ex.InnerException.Message.Contains("FOREIGN KEY constraint")))
+                return new Result<AnswerResponse>("Esta resposta não pode ser removida pois está sendo usada em uma resposta");
+            else
+                return new Result<AnswerResponse>("Erro ao excluir resposta: " + Environment.NewLine + ex.Message);
         }
     }
 }
