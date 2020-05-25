@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
+import 'models/question.dart';
 import 'quiz-page.dart';
+import 'services/quiz-service.dart';
 
 class PreStartQuizPage extends StatefulWidget {
   @override
@@ -8,14 +10,20 @@ class PreStartQuizPage extends StatefulWidget {
 }
 
 class _PreStartQuizPageState extends State<PreStartQuizPage> {
+  final QuizService _quizService = QuizService();
   String _userName = '';
 
   void _startQuiz() {
+    _quizService.start(_userName).then((value) => {navigate(value)});
+  }
+
+  void navigate(List<Question> questions) {
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (_) => QuizPage(
           userName: _userName,
+          questions: questions,
         ),
       ),
     );

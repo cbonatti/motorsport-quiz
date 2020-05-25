@@ -5,41 +5,32 @@ import 'package:motorsportquiz/pages/quiz/models/answer.dart';
 import 'package:motorsportquiz/pages/quiz/models/question.dart';
 
 import 'models/quiz-answer.dart';
-import 'models/quiz.dart';
 import 'quiz-result-page.dart';
+import 'services/quiz-service.dart';
 
 class QuizPage extends StatefulWidget {
-  QuizPage({@required this.userName});
+  QuizPage({@required this.userName, @required this.questions});
   final String userName;
-
-  final Quiz quiz = Quiz(name: '', questions: <Question>[
-    Question(id: '1', name: 'BMW', answers: <Answer>[
-      Answer(id: '1', name: 'Alemanha'),
-      Answer(id: '2', name: 'Inglaterra'),
-    ]),
-    Question(id: '1', name: 'Mini', answers: <Answer>[
-      Answer(id: '1', name: 'Alemanha'),
-      Answer(id: '2', name: 'Inglaterra'),
-    ]),
-  ]);
+  final List<Question> questions;
 
   @override
   _QuizPageState createState() => _QuizPageState();
 }
 
 class _QuizPageState extends State<QuizPage> {
+  final QuizService _quizService = QuizService();
   int _index = 0;
   Answer _answer;
   List<QuizAnswer> _answers = [];
   bool _canFinish = false;
 
   void _checkCanFinish() {
-    _canFinish = _index == widget.quiz.questions.length - 1;
+    _canFinish = _index == widget.questions.length - 1;
   }
 
   void _addAnswer() {
     _answers.add(QuizAnswer(
-        questionId: widget.quiz.questions[_index].id, answerId: _answer.id));
+        questionId: widget.questions[_index].id, answerId: _answer.id));
   }
 
   void _next() {
@@ -53,11 +44,18 @@ class _QuizPageState extends State<QuizPage> {
 
   void _finish() {
     _addAnswer();
+    _quizService
+        .finish(widget.userName, _answers)
+        .then((value) => {navigate(value.result)});
+  }
+
+  void navigate(double result) {
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (_) => QuizResultPage(
-          result: QuizRanking(position: 1, name: widget.userName, result: 100),
+          result:
+              QuizRanking(position: 0, name: widget.userName, result: result),
         ),
       ),
     );
@@ -105,13 +103,13 @@ class _QuizPageState extends State<QuizPage> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                   Text(
-                      'Questão ${_index + 1} - ${widget.quiz.questions[_index].name}'),
+                      'Questão ${_index + 1} - ${widget.questions[_index].name}'),
                   DataTable(
                     columns: const <DataColumn>[
                       DataColumn(label: Text('')),
                       DataColumn(label: Text('')),
                     ],
-                    rows: widget.quiz.questions[_index].answers
+                    rows: widget.questions[_index].answers
                         .map(
                           ((element) => DataRow(
                                 cells: <DataCell>[

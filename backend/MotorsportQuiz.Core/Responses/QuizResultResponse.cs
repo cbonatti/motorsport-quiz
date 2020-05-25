@@ -8,7 +8,7 @@ namespace MotorsportQuiz.Core.Responses
         public double Result { get; set; }
         public int Position { get; set; }
 
-        public static QuizResultResponse ToResponse(Quiz quiz, int index)
+        public static QuizResultResponse ToResponse(Quiz quiz, int index = 0)
         {
             if (quiz == null)
                 return null;

@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:motorsportquiz/pages/quiz-ranking/models/quiz-ranking.dart';
 import 'package:motorsportquiz/pages/quiz-ranking/quiz-ranking-page.dart';
 
+import 'models/question.dart';
 import 'quiz-page.dart';
+import 'services/quiz-service.dart';
 
 class QuizResultPage extends StatefulWidget {
   QuizResultPage({@required this.result});
@@ -13,14 +15,19 @@ class QuizResultPage extends StatefulWidget {
 }
 
 class _QuizResultPageState extends State<QuizResultPage> {
-  String _userName = '';
+  final QuizService _quizService = QuizService();
 
   void _startQuiz() {
+    _quizService.start(widget.result.name).then((value) => {navigate(value)});
+  }
+
+  void navigate(List<Question> questions) {
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (_) => QuizPage(
-          userName: _userName,
+          userName: widget.result.name,
+          questions: questions,
         ),
       ),
     );
