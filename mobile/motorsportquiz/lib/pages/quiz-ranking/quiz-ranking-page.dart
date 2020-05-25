@@ -2,22 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:motorsportquiz/pages/quiz/pre-start-quiz-page.dart';
 
 import 'models/quiz-ranking.dart';
+import 'services/quiz-ranking-service.dart';
 
 class QuizRankingPage extends StatefulWidget {
-  final List<QuizRanking> ranking = <QuizRanking>[
-    QuizRanking(position: 1, name: 'Carlos', result: 10),
-    QuizRanking(position: 2, name: 'Carlos', result: 100),
-    QuizRanking(position: 3, name: 'Carlos', result: 50),
-    QuizRanking(position: 4, name: 'Enrico', result: 100),
-    QuizRanking(position: 5, name: 'Enrico', result: 100),
-    QuizRanking(position: 6, name: 'Gabriela', result: 100),
-    QuizRanking(position: 7, name: 'Carlos', result: 80),
-  ];
   @override
   _QuizRankingPageState createState() => _QuizRankingPageState();
 }
 
 class _QuizRankingPageState extends State<QuizRankingPage> {
+  final QuizRankingService _rankingService = QuizRankingService();
   void _startQuiz(BuildContext context) {
     Navigator.push(
       context,
@@ -42,14 +35,16 @@ class _QuizRankingPageState extends State<QuizRankingPage> {
           )
         ],
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                DataTable(
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          FutureBuilder(
+            future: _rankingService.getRanking(),
+            builder: (BuildContext context,
+                AsyncSnapshot<List<QuizRanking>> snapshot) {
+              if (snapshot.hasData) {
+                List<QuizRanking> ranking = snapshot.data;
+                return DataTable(
                   columns: const <DataColumn>[
                     DataColumn(
                       label: Text(
@@ -70,23 +65,26 @@ class _QuizRankingPageState extends State<QuizRankingPage> {
                       ),
                     ),
                   ],
-                  rows: widget.ranking
+                  rows: ranking
                       .map(
                         ((element) => DataRow(
                               cells: <DataCell>[
                                 DataCell(Text(element.position
                                     .toString())), //Extracting from Map element the value
                                 DataCell(Text(element.name)),
-                                DataCell(Text(element.result.toString())),
+                                DataCell(Text(
+                                    '${element.result.toStringAsFixed(2)}%')),
                               ],
                             )),
                       )
                       .toList(),
-                )
-              ],
-            )
-          ],
-        ),
+                );
+              } else {
+                return Center(child: CircularProgressIndicator());
+              }
+            },
+          ),
+        ],
       ),
     );
   }
