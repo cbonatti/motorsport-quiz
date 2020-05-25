@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:motorsportquiz/pages/quiz-ranking/models/quiz-ranking.dart';
+import 'package:motorsportquiz/pages/quiz-ranking/quiz-ranking-page.dart';
 
 import 'quiz-page.dart';
 
@@ -12,21 +13,27 @@ class QuizResultPage extends StatefulWidget {
 }
 
 class _QuizResultPageState extends State<QuizResultPage> {
-  String userName = '';
-
-  _QuizResultPageState() {
-    //userName = widget.result.name;
-  }
+  String _userName = '';
 
   void _startQuiz() {
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (_) => QuizPage(
-          userName: userName,
+          userName: _userName,
         ),
       ),
     );
+  }
+
+  Future<bool> _goToRanking(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => QuizRankingPage(),
+      ),
+    );
+    return Future.value(false);
   }
 
   @override
@@ -48,9 +55,13 @@ class _QuizResultPageState extends State<QuizResultPage> {
       appBar: AppBar(
         title: Text('Motorsport Quiz'),
       ),
-      body: Padding(
-          padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
-          child: Text('Seu resultado ${widget.result.result}')),
+      body: WillPopScope(
+          onWillPop: () async {
+            return _goToRanking(context);
+          },
+          child: Padding(
+              padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
+              child: Text('Seu resultado ${widget.result.result}'))),
     );
   }
 }

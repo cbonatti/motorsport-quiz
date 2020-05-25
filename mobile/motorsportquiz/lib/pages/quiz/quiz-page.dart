@@ -28,31 +28,31 @@ class QuizPage extends StatefulWidget {
 }
 
 class _QuizPageState extends State<QuizPage> {
-  int index = 0;
-  Answer answer;
-  List<QuizAnswer> answers = [];
-  bool canFinish = false;
+  int _index = 0;
+  Answer _answer;
+  List<QuizAnswer> _answers = [];
+  bool _canFinish = false;
 
-  void checkCanFinish() {
-    canFinish = index == widget.quiz.questions.length - 1;
+  void _checkCanFinish() {
+    _canFinish = _index == widget.quiz.questions.length - 1;
   }
 
-  void addAnswer() {
-    answers.add(QuizAnswer(
-        questionId: widget.quiz.questions[index].id, answerId: answer.id));
+  void _addAnswer() {
+    _answers.add(QuizAnswer(
+        questionId: widget.quiz.questions[_index].id, answerId: _answer.id));
   }
 
-  void next() {
+  void _next() {
     setState(() {
-      addAnswer();
-      answer = null;
-      index++;
-      checkCanFinish();
+      _addAnswer();
+      _answer = null;
+      _index++;
+      _checkCanFinish();
     });
   }
 
-  void finish() {
-    addAnswer();
+  void _finish() {
+    _addAnswer();
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -63,7 +63,7 @@ class _QuizPageState extends State<QuizPage> {
     );
   }
 
-  Future<bool> blockReturn() {
+  Future<bool> _blockReturn() {
     Fluttertoast.showToast(
       backgroundColor: Colors.indigo,
       textColor: Colors.white,
@@ -85,19 +85,19 @@ class _QuizPageState extends State<QuizPage> {
             icon: const Icon(Icons.redo),
             tooltip: 'Próxima',
             disabledColor: Colors.grey,
-            onPressed: !canFinish && answer != null ? next : null,
+            onPressed: !_canFinish && _answer != null ? _next : null,
           ),
           IconButton(
             icon: const Icon(Icons.publish),
             tooltip: 'Finalizar',
             disabledColor: Colors.grey,
-            onPressed: canFinish && answer != null ? finish : null,
+            onPressed: _canFinish && _answer != null ? _finish : null,
           ),
         ],
       ),
       body: WillPopScope(
         onWillPop: () async {
-          return blockReturn();
+          return _blockReturn();
         },
         child: Padding(
             padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
@@ -105,22 +105,22 @@ class _QuizPageState extends State<QuizPage> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                   Text(
-                      'Questão ${index + 1} - ${widget.quiz.questions[index].name}'),
+                      'Questão ${_index + 1} - ${widget.quiz.questions[_index].name}'),
                   DataTable(
                     columns: const <DataColumn>[
                       DataColumn(label: Text('')),
                       DataColumn(label: Text('')),
                     ],
-                    rows: widget.quiz.questions[index].answers
+                    rows: widget.quiz.questions[_index].answers
                         .map(
                           ((element) => DataRow(
                                 cells: <DataCell>[
                                   DataCell(Radio<Answer>(
                                     value: element,
-                                    groupValue: answer,
+                                    groupValue: _answer,
                                     onChanged: (Answer newValue) {
                                       setState(() {
-                                        answer = newValue;
+                                        _answer = newValue;
                                       });
                                     },
                                   )),

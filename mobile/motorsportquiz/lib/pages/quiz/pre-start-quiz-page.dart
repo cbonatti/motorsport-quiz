@@ -8,14 +8,14 @@ class PreStartQuizPage extends StatefulWidget {
 }
 
 class _PreStartQuizPageState extends State<PreStartQuizPage> {
-  String userName = '';
+  String _userName = '';
 
   void _startQuiz() {
     Navigator.push(
       context,
       MaterialPageRoute(
         builder: (_) => QuizPage(
-          userName: userName,
+          userName: _userName,
         ),
       ),
     );
@@ -31,7 +31,7 @@ class _PreStartQuizPageState extends State<PreStartQuizPage> {
         disabledTextColor: Colors.black,
         padding: EdgeInsets.all(8.0),
         splashColor: Colors.indigoAccent,
-        onPressed: userName == '' ? null : _startQuiz,
+        onPressed: _userName == '' ? null : _startQuiz,
         child: Text(
           "Iniciar",
           style: TextStyle(fontSize: 20.0),
@@ -45,7 +45,7 @@ class _PreStartQuizPageState extends State<PreStartQuizPage> {
           child: TextFormField(
             onChanged: (text) {
               setState(() {
-                userName = text;
+                _userName = text;
               });
             },
             decoration: InputDecoration(labelText: 'Informe seu nome'),

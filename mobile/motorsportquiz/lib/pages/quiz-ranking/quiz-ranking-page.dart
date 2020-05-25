@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:motorsportquiz/pages/quiz/pre-start-quiz-page.dart';
-import 'package:motorsportquiz/pages/quiz/quiz-page.dart';
 
 import 'models/quiz-ranking.dart';
 
@@ -19,7 +18,7 @@ class QuizRankingPage extends StatefulWidget {
 }
 
 class _QuizRankingPageState extends State<QuizRankingPage> {
-  void openPage(BuildContext context) {
+  void _startQuiz(BuildContext context) {
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -38,7 +37,7 @@ class _QuizRankingPageState extends State<QuizRankingPage> {
             icon: const Icon(Icons.play_arrow),
             tooltip: 'Iniciar Quiz',
             onPressed: () {
-              openPage(context);
+              _startQuiz(context);
             },
           )
         ],
