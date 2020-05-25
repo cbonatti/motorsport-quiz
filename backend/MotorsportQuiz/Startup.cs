@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
@@ -13,6 +14,8 @@ namespace MotorsportQuiz
 {
     public class Startup
     {
+        const string CorsPolicy = "CorsPolicy";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -27,6 +30,18 @@ namespace MotorsportQuiz
             services.AddDbContext();
             services.RegisterInfra();
             services.RegisterCore();
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy(CorsPolicy,
+                    corsBuilder =>
+                    {
+                        corsBuilder
+                            .AllowAnyOrigin()
+                            .AllowAnyMethod()
+                            .AllowAnyHeader();
+                    });
+            });
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
@@ -54,6 +69,9 @@ namespace MotorsportQuiz
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseCors(CorsPolicy)
+               .UseRequestLocalization();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
