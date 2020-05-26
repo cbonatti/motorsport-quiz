@@ -22,8 +22,8 @@ class _QuizPageState extends State<QuizPage> {
   int _index = 0;
   Answer _answer;
   List<QuizAnswer> _answers = [];
-  bool _canFinish = false;
   List<Question> questions = [];
+  String nextButtonText = "Próxima";
 
   @override
   void initState() {
@@ -31,25 +31,31 @@ class _QuizPageState extends State<QuizPage> {
     questions = widget.questions;
   }
 
-  void _checkCanFinish() {
-    _canFinish = _index == questions.length - 1;
-  }
-
   void _addAnswer() {
     _answers.add(
         QuizAnswer(questionId: questions[_index].id, answerId: _answer.id));
+    _answer = null;
   }
+
+  bool _isLastQuestion() => _index == questions.length - 1;
 
   void _next() {
     setState(() {
       _addAnswer();
+
+      if (_isLastQuestion()) {
+        _finish();
+        return;
+      }
+
       _index++;
-      _checkCanFinish();
+      if (_isLastQuestion()) {
+        nextButtonText = "Finalizar";
+      }
     });
   }
 
   void _finish() {
-    _addAnswer();
     _quizService
         .finish(widget.userName, _answers)
         .then((value) => {navigate(value.result)});
@@ -104,33 +110,34 @@ class _QuizPageState extends State<QuizPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: FlatButton(
+        color: Colors.indigo,
+        textColor: Colors.white,
+        onPressed: _answer != null ? _next : null,
+        child: Text(
+          nextButtonText,
+          style: TextStyle(fontSize: 20.0),
+        ),
+      ),
       appBar: AppBar(
         title: Text('Motorsport Quiz'),
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.redo),
-            tooltip: 'Próxima',
-            disabledColor: Colors.grey,
-            onPressed: !_canFinish && _answer != null ? _next : null,
-          ),
-          IconButton(
-            icon: const Icon(Icons.publish),
-            tooltip: 'Finalizar',
-            disabledColor: Colors.grey,
-            onPressed: _canFinish && _answer != null ? _finish : null,
-          ),
-        ],
       ),
       body: WillPopScope(
         onWillPop: () async {
           return _blockReturn();
         },
         child: Padding(
-            padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
+            padding: EdgeInsets.all(20.0),
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
-                  Text('Questão ${_index + 1} - ${questions[_index].name}'),
+                  Center(
+                    child: Text(
+                      'Questão ${_index + 1} - ${questions[_index].name}',
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                  ),
                   Column(
                     children: createAnswerList(),
                   ),

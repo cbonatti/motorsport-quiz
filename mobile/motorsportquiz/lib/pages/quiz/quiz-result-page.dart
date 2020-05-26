@@ -84,6 +84,7 @@ class _QuizResultPageState extends State<QuizResultPage>
               padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
               child: Center(
                   child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text(
                     'Seu resultado',
