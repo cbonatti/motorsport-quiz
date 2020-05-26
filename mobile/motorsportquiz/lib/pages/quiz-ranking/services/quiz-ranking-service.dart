@@ -1,11 +1,11 @@
 import 'dart:convert';
-
+import 'package:motorsportquiz/shared/globals.dart' as globals;
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:motorsportquiz/pages/quiz-ranking/models/quiz-ranking.dart';
 
 class QuizRankingService {
-  final String url = "https://10.0.2.2:5001/api/quiz/scores";
+  final String url = "${globals.serviceUrl}quiz/scores";
 
   Future<List<QuizRanking>> getRanking() async {
     Response res = await http.get(url);
