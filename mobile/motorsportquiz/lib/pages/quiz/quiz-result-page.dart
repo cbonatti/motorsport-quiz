@@ -67,10 +67,6 @@ class _QuizResultPageState extends State<QuizResultPage>
       bottomNavigationBar: FlatButton(
         color: Colors.indigo,
         textColor: Colors.white,
-        disabledColor: Colors.grey[300],
-        disabledTextColor: Colors.black,
-        padding: EdgeInsets.all(8.0),
-        splashColor: Colors.indigoAccent,
         onPressed: _startQuiz,
         child: Text(
           "Reiniciar",

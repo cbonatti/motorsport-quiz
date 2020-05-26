@@ -23,20 +23,26 @@ class _QuizPageState extends State<QuizPage> {
   Answer _answer;
   List<QuizAnswer> _answers = [];
   bool _canFinish = false;
+  List<Question> questions = [];
+
+  @override
+  void initState() {
+    super.initState();
+    questions = widget.questions;
+  }
 
   void _checkCanFinish() {
-    _canFinish = _index == widget.questions.length - 1;
+    _canFinish = _index == questions.length - 1;
   }
 
   void _addAnswer() {
-    _answers.add(QuizAnswer(
-        questionId: widget.questions[_index].id, answerId: _answer.id));
+    _answers.add(
+        QuizAnswer(questionId: questions[_index].id, answerId: _answer.id));
   }
 
   void _next() {
     setState(() {
       _addAnswer();
-      _answer = null;
       _index++;
       _checkCanFinish();
     });
@@ -73,6 +79,28 @@ class _QuizPageState extends State<QuizPage> {
     return Future.value(false);
   }
 
+  List<Widget> createAnswerList() {
+    List<Widget> list = [];
+    for (var answer in questions[_index].answers) {
+      list.add(RadioListTile(
+        value: answer,
+        groupValue: _answer,
+        title: Text(answer.name),
+        onChanged: (currentAnswer) {
+          setSelectedAnswer(answer);
+        },
+        selected: _answer == answer,
+      ));
+    }
+    return list;
+  }
+
+  setSelectedAnswer(Answer answer) {
+    setState(() {
+      _answer = answer;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -102,31 +130,9 @@ class _QuizPageState extends State<QuizPage> {
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
-                  Text(
-                      'Questão ${_index + 1} - ${widget.questions[_index].name}'),
-                  DataTable(
-                    columns: const <DataColumn>[
-                      DataColumn(label: Text('')),
-                      DataColumn(label: Text('')),
-                    ],
-                    rows: widget.questions[_index].answers
-                        .map(
-                          ((element) => DataRow(
-                                cells: <DataCell>[
-                                  DataCell(Radio<Answer>(
-                                    value: element,
-                                    groupValue: _answer,
-                                    onChanged: (Answer newValue) {
-                                      setState(() {
-                                        _answer = newValue;
-                                      });
-                                    },
-                                  )),
-                                  DataCell(Text(element.name)),
-                                ],
-                              )),
-                        )
-                        .toList(),
+                  Text('Questão ${_index + 1} - ${questions[_index].name}'),
+                  Column(
+                    children: createAnswerList(),
                   ),
                 ])),
       ),
