@@ -34,7 +34,7 @@ class QuizService {
 
   Future<QuizRanking> finish(String userName, List<QuizAnswer> answers) async {
     Response res = await http.post(
-      '$url/quiz/finish',
+      '${url}quiz/finish',
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
